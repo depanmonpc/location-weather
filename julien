@@ -1,0 +1,27 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Sélectionne l'élément contenant l'heure
+    let timeElement = document.querySelector('.lw-time');
+
+    // Vérifie si l'élément existe pour éviter les erreurs
+    if (timeElement) {
+        // Récupère le texte de l'heure actuelle
+        let timeText = timeElement.innerText;
+
+        // Fonction pour convertir au format 24 heures
+        function convertTo24Hour(time) {
+            const [timePart, modifier] = time.split(' ');
+            let [hours, minutes] = timePart.split(':');
+            
+            if (modifier === 'pm' && hours !== '12') {
+                hours = parseInt(hours, 10) + 12;
+            } else if (modifier === 'am' && hours === '12') {
+                hours = '00';
+            }
+            
+            return `${hours}:${minutes}`;
+        }
+
+        // Modifie le texte affiché avec le format 24 heures
+        timeElement.innerText = convertTo24Hour(timeText);
+    }
+});
