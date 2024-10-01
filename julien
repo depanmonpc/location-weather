@@ -1,27 +1,41 @@
+// Script pour convertir les heures au format 24 heures
+// Auteur : Julien Chrétien
+// Date : 1er octobre 2024
+
+// Écouter l'événement DOMContentLoaded pour s'assurer que la page est entièrement chargée
 document.addEventListener('DOMContentLoaded', function() {
-    // Sélectionne l'élément contenant l'heure
+
+    // Sélectionner l'élément contenant l'heure
+    // La classe .lw-time doit être utilisée pour identifier la balise HTML où l'heure est affichée
     let timeElement = document.querySelector('.lw-time');
 
-    // Vérifie si l'élément existe pour éviter les erreurs
+    // Vérifier si l'élément existe pour éviter les erreurs si la classe n'est pas présente
     if (timeElement) {
-        // Récupère le texte de l'heure actuelle
+
+        // Récupérer le texte de l'heure (par exemple, '10:47 am')
         let timeText = timeElement.innerText;
 
-        // Fonction pour convertir au format 24 heures
+        // Fonction pour convertir une heure au format 12 heures en format 24 heures
+        // Prend en entrée un texte avec l'heure (par exemple, '10:47 am')
         function convertTo24Hour(time) {
+            // Séparer l'heure et l'indicateur AM/PM
             const [timePart, modifier] = time.split(' ');
+
+            // Séparer les heures et les minutes
             let [hours, minutes] = timePart.split(':');
-            
+
+            // Convertir l'heure au format 24 heures en fonction de l'indicateur AM/PM
             if (modifier === 'pm' && hours !== '12') {
                 hours = parseInt(hours, 10) + 12;
             } else if (modifier === 'am' && hours === '12') {
                 hours = '00';
             }
-            
+
+            // Retourner l'heure au format 24 heures (par exemple, '14:47')
             return `${hours}:${minutes}`;
         }
 
-        // Modifie le texte affiché avec le format 24 heures
+        // Appliquer la conversion et mettre à jour le texte de l'heure sur la page
         timeElement.innerText = convertTo24Hour(timeText);
     }
 });
